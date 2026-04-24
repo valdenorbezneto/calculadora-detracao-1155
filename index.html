@@ -3,273 +3,209 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Detração por Datas - Tema 1155 STJ</title>
+    <title>Calculadora de Detração Profissional - Tema 1155 STJ</title>
     <style>
         :root {
-            --primary: #2563eb;
-            --secondary: #0ea5e9;
-            --bg: #f8fafc;
+            --primary: #1e3a8a;
+            --secondary: #3b82f6;
+            --bg: #f1f5f9;
             --card-bg: #ffffff;
-            --text: #1e293b;
+            --text: #0f172a;
+            --accent: #10b981;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             background-color: var(--bg);
             color: var(--text);
             display: flex;
             justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
             padding: 20px;
+            margin: 0;
         }
 
         .container {
             background-color: var(--card-bg);
-            max-width: 550px;
+            max-width: 650px;
             width: 100%;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            border-top: 8px solid var(--primary);
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
         }
 
-        h1 {
-            font-size: 1.5rem;
-            color: var(--primary);
-            text-align: center;
-            margin-bottom: 5px;
-        }
+        h1 { font-size: 1.6rem; color: var(--primary); text-align: center; margin-bottom: 5px; }
+        .subtitle { text-align: center; font-size: 0.9rem; color: #64748b; margin-bottom: 30px; }
+        
+        .section-title { font-weight: 700; margin-bottom: 15px; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px; color: #334155; font-size: 0.9rem; text-transform: uppercase; }
 
-        .subtitle {
-            text-align: center;
-            font-size: 0.85rem;
-            color: #64748b;
-            margin-bottom: 25px;
-        }
+        .row { display: flex; gap: 15px; margin-bottom: 20px; }
+        .input-group { flex: 1; display: flex; flex-direction: column; }
+        label { font-weight: 600; margin-bottom: 6px; font-size: 0.85rem; }
+        input { padding: 10px; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 0.95rem; }
+        input:focus { border-color: var(--secondary); outline: none; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
 
-        .section-title {
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            color: var(--text);
-            border-bottom: 2px solid #e2e8f0;
-            padding-bottom: 5px;
-        }
+        .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
+        .result-box { background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center; }
+        .result-box span { display: block; font-size: 1.5rem; font-weight: 700; color: var(--primary); }
+        .result-box label { font-size: 0.75rem; color: #64748b; }
 
-        .row {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .input-group {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        label {
-            font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 0.85rem;
-            color: #475569;
-        }
-
-        input {
+        .minuta-section { margin-top: 30px; background: #fff; border: 1.5px dashed #cbd5e1; padding: 20px; border-radius: 8px; position: relative; }
+        #minutaTexto { 
+            white-space: pre-wrap; 
+            font-family: 'Courier New', Courier, monospace; 
+            font-size: 0.9rem; 
+            color: #334155; 
+            line-height: 1.5;
+            background: none;
+            border: none;
             width: 100%;
-            padding: 12px;
-            border: 2px solid #cbd5e1;
-            border-radius: 8px;
-            font-size: 0.95rem;
+            height: 160px;
+            resize: none;
             outline: none;
-            transition: border-color 0.3s;
-            box-sizing: border-box;
         }
 
-        input:focus {
-            border-color: var(--primary);
-        }
-
-        .stats-box {
-            background: #f1f5f9;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            font-size: 0.9rem;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .stats-box div {
-            text-align: center;
-        }
-
-        .stats-box span {
-            display: block;
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .result-card {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        .btn-copy {
+            background-color: var(--primary);
             color: white;
-            padding: 25px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.2);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background 0.2s;
         }
 
-        .result-main {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin: 10px 0;
-            line-height: 1;
-        }
+        .btn-copy:hover { background-color: #1e40af; }
+        .btn-copy:active { transform: scale(0.98); }
 
-        .result-label {
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            opacity: 0.9;
-        }
-
-        .info-box {
-            margin-top: 15px;
-            font-size: 0.85rem;
-            background: rgba(255,255,255,0.2);
-            padding: 12px;
-            border-radius: 8px;
-        }
-
-        .error-msg {
-            color: #ef4444;
-            font-size: 0.85rem;
-            text-align: center;
-            margin-top: -10px;
-            margin-bottom: 10px;
-            display: none;
-        }
+        .badge-stj { background: #dcfce7; color: #166534; padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Calculadora de Detração</h1>
-    <p class="subtitle">Tema 1155 STJ • Cálculo Automático por Datas</p>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h1>Calculadora de Detração</h1>
+        <span class="badge-stj">TEMA 1155 STJ</span>
+    </div>
+    <p class="subtitle">Recurso Repetitivo REsp 1977135-SC</p>
 
-    <div class="section-title">1. Período de Recolhimento</div>
+    <div class="section-title">Parâmetros do Período</div>
     <div class="row">
         <div class="input-group">
-            <label>Data de Início</label>
+            <label>Início do Recolhimento</label>
             <input type="date" id="dataInicio" onchange="calcular()">
         </div>
         <div class="input-group">
-            <label>Data de Fim</label>
+            <label>Fim do Recolhimento</label>
             <input type="date" id="dataFim" onchange="calcular()">
         </div>
     </div>
-    <div id="erroData" class="error-msg">A data de fim deve ser maior ou igual à data de início.</div>
 
-    <div class="section-title">2. Ajuste de Horas e Feriados</div>
     <div class="row">
         <div class="input-group">
-            <label>Horas/Dia (Útil)</label>
-            <input type="number" id="horasUteis" value="10" oninput="calcular()">
+            <label>Horas/Dia Útil</label>
+            <input type="number" id="hUteis" value="10" oninput="calcular()">
         </div>
         <div class="input-group">
-            <label>Horas/Dia (Folga)</label>
-            <input type="number" id="horasFolga" value="24" oninput="calcular()">
+            <label>Horas/Fim de Semana</label>
+            <input type="number" id="hFolga" value="24" oninput="calcular()">
         </div>
         <div class="input-group">
-            <label>Feriados em dias úteis</label>
-            <input type="number" id="feriados" value="0" placeholder="Ex: 2" oninput="calcular()">
+            <label>Feriados (Dias Úteis)</label>
+            <input type="number" id="feriados" value="0" oninput="calcular()">
         </div>
     </div>
 
-    <div class="stats-box">
-        <div>Dias Úteis Contados<span id="contagemUteis">0</span></div>
-        <div>Fins de Semana/Folgas<span id="contagemFolgas">0</span></div>
+    <div class="section-title">Resultados do Cômputo</div>
+    <div class="result-grid">
+        <div class="result-box">
+            <label>Total de Horas</label>
+            <span id="resHoras">0</span>
+        </div>
+        <div class="result-box" style="background: #eff6ff; border-color: #bfdbfe;">
+            <label>Dias de Detração</label>
+            <span id="resDias" style="color: var(--secondary);">0</span>
+        </div>
     </div>
 
-    <div class="result-card">
-        <div class="result-label">Total de Detração</div>
-        <div class="result-main" id="resultadoDias">0</div>
-        <div class="result-label">Dias para Abater da Pena</div>
-        
-        <div class="info-box">
-            Total acumulado: <strong id="totalHoras">0</strong> horas <br>
-            Fração Desprezada: <strong id="horasDescartadas">0</strong> horas
-        </div>
+    <div class="section-title">Texto para Minuta (Copie e Cole)</div>
+    <div class="minuta-section">
+        <textarea id="minutaTexto" readonly>Preencha as datas para gerar o texto da minuta...</textarea>
+        <button class="btn-copy" onclick="copiarTexto()">
+            <span>📋</span> Copiar Texto da Minuta
+        </button>
     </div>
 </div>
 
 <script>
-    function calcular() {
-        const dataInicioStr = document.getElementById('dataInicio').value;
-        const dataFimStr = document.getElementById('dataFim').value;
-        const erroMsg = document.getElementById('erroData');
-
-        // Se não tiver preenchido as duas datas, zera tudo
-        if (!dataInicioStr || !dataFimStr) return zerarPainel();
-
-        // Evitar problemas de fuso horário definindo meio-dia
-        const dataInicio = new Date(dataInicioStr + 'T12:00:00');
-        const dataFim = new Date(dataFimStr + 'T12:00:00');
-
-        if (dataInicio > dataFim) {
-            erroMsg.style.display = 'block';
-            return zerarPainel();
-        } else {
-            erroMsg.style.display = 'none';
-        }
-
-        let diasUteis = 0;
-        let diasFolga = 0;
-
-        // Loop dia por dia
-        let diaAtual = new Date(dataInicio);
-        while (diaAtual <= dataFim) {
-            let diaDaSemana = diaAtual.getDay();
-            // 0 = Domingo, 6 = Sábado
-            if (diaDaSemana === 0 || diaDaSemana === 6) {
-                diasFolga++;
-            } else {
-                diasUteis++;
-            }
-            diaAtual.setDate(diaAtual.getDate() + 1); // Avança 1 dia
-        }
-
-        // Ajuste de Feriados (Transforma dia útil em dia de folga)
-        const feriados = parseInt(document.getElementById('feriados').value) || 0;
-        if (feriados > 0 && diasUteis >= feriados) {
-            diasUteis -= feriados;
-            diasFolga += feriados;
-        }
-
-        const hUteis = parseFloat(document.getElementById('horasUteis').value) || 0;
-        const hFolga = parseFloat(document.getElementById('horasFolga').value) || 0;
-
-        const totalHoras = (diasUteis * hUteis) + (diasFolga * hFolga);
-        const diasDetracao = Math.floor(totalHoras / 24);
-        const resto = totalHoras % 24;
-
-        // Atualizar tela
-        document.getElementById('contagemUteis').innerText = diasUteis;
-        document.getElementById('contagemFolgas').innerText = diasFolga;
-        document.getElementById('resultadoDias').innerText = diasDetracao;
-        document.getElementById('totalHoras').innerText = totalHoras;
-        document.getElementById('horasDescartadas').innerText = resto;
+    function formatarData(dataStr) {
+        if(!dataStr) return "";
+        const [ano, mes, dia] = dataStr.split("-");
+        return `${dia}/${mes}/${ano}`;
     }
 
-    function zerarPainel() {
-        document.getElementById('contagemUteis').innerText = '0';
-        document.getElementById('contagemFolgas').innerText = '0';
-        document.getElementById('resultadoDias').innerText = '0';
-        document.getElementById('totalHoras').innerText = '0';
-        document.getElementById('horasDescartadas').innerText = '0';
+    function calcular() {
+        const dIniStr = document.getElementById('dataInicio').value;
+        const dFimStr = document.getElementById('dataFim').value;
+        
+        if (!dIniStr || !dFimStr) return;
+
+        const dIni = new Date(dIniStr + 'T12:00:00');
+        const dFim = new Date(dFimStr + 'T12:00:00');
+        
+        if (dIni > dFim) return;
+
+        let qtdUteis = 0;
+        let qtdFolga = 0;
+        let temp = new Date(dIni);
+
+        while (temp <= dFim) {
+            const diaSemana = temp.getDay();
+            if (diaSemana === 0 || diaSemana === 6) qtdFolga++;
+            else qtdUteis++;
+            temp.setDate(temp.getDate() + 1);
+        }
+
+        const feriados = parseInt(document.getElementById('feriados').value) || 0;
+        const reaisUteis = Math.max(0, qtdUteis - feriados);
+        const reaisFolga = qtdFolga + feriados;
+        const totalDiasCorridos = reaisUteis + reaisFolga;
+
+        const hU = parseFloat(document.getElementById('hUteis').value) || 0;
+        const hF = parseFloat(document.getElementById('hFolga').value) || 0;
+
+        const totalHUteis = reaisUteis * hU;
+        const totalHFolga = reaisFolga * hF;
+        const totalHorasGeral = totalHUteis + totalHFolga;
+        const diasDetracao = Math.floor(totalHorasGeral / 24);
+
+        // Atualiza Cards
+        document.getElementById('resHoras').innerText = totalHorasGeral.toLocaleString('pt-BR');
+        document.getElementById('resDias').innerText = diasDetracao;
+
+        // Gera Minuta
+        const hoje = new Date().toLocaleDateString('pt-BR');
+        const minuta = `Procedendo ao cálculo atualizado até a presente data (${hoje}):\n\nRecolhimento Domiciliar Cautelar: Cumprido desde ${formatarData(dIniStr)} até ${formatarData(dFimStr)} (${totalDiasCorridos} dias corridos).\nDias Úteis (${reaisUteis} dias x ${hU}h diárias): ${totalHUteis.toLocaleString('pt-BR')} horas.\nDias de folga (${reaisFolga} dias x ${hF}h diárias): ${totalHFolga.toLocaleString('pt-BR')} horas.\nTotal: ${totalHorasGeral.toLocaleString('pt-BR')} horas / 24 = ${diasDetracao} dias de detração.`;
+        
+        document.getElementById('minutaTexto').value = minuta;
+    }
+
+    function copiarTexto() {
+        const copyText = document.getElementById("minutaTexto");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+        navigator.clipboard.writeText(copyText.value);
+        
+        const btn = document.querySelector('.btn-copy span:last-child');
+        const originalText = btn.innerText;
+        btn.innerText = "Texto Copiado!";
+        setTimeout(() => { btn.innerText = originalText; }, 2000);
     }
 </script>
 
